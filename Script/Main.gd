@@ -18,8 +18,8 @@ func _input(event):
 	if event.is_action_pressed("ui_accept"):
 		print(OS.window_size)
 		
-		
 
 
 func resized():
 	OS.window_size.y = OS.window_size.x*RATIO
+	
