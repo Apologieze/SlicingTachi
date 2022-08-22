@@ -1,6 +1,6 @@
 extends AnimatedSprite
 
-const CONV_STATE = [null, "Idle_", "Block_", "Walk_"]
+const CONV_STATE = [null, "Idle_", "Block_", "Walk_", "Attack_"]
 const CONV_DIRECTION = [null, "up", "right", "down", "left"]
 
 var direction = 0
@@ -10,7 +10,7 @@ var moving_direction = Vector2.ZERO
 var acceleration = 10
 var max_speed = 500
 var velocity = Vector2.ZERO
-var deceleration_step = 0.07
+var deceleration_step = 0.09
 
 onready var parent = get_node("../")
 
@@ -50,12 +50,15 @@ func _input(event):
 		change_state(2)
 		deceleration_step = 0.01
 	elif event.is_action_released("block"):
-		deceleration_step = 0.07
+		deceleration_step = 0.09
 		if Input.is_action_pressed("ui_"+CONV_DIRECTION[direction]):
 			change_state(3)
 		else:
 			change_state(1)
 	
+	elif event.is_action_pressed("attack"):
+		change_state(4)
+		deceleration_step = 0.01
 	
 func change_state(temp_state):
 	state = temp_state
@@ -65,7 +68,8 @@ func change_direction(temp_direct):
 	direction = temp_direct
 	if state == 1:
 		state = 3
-	change_anim()
+	if state != 4:
+		change_anim()
 
 func stop_direction(temp_direction):
 	if temp_direction == direction:
@@ -78,7 +82,7 @@ func change_anim():
 
 
 func move():
-	print(velocity)
+#	print(velocity)
 	if state == 3:
 		match direction:
 			1:
@@ -92,8 +96,17 @@ func move():
 		velocity = lerp(velocity, moving_direction, 0.1)
 	else:
 		velocity = lerp(velocity, Vector2.ZERO, deceleration_step)
-		if abs(velocity.x) < 100:
+		if abs(velocity.x) < 80:
 			velocity.x = 0
-		if abs(velocity.y) < 100:
+		if abs(velocity.y) < 80:
 			velocity.y = 0
 	parent.move_and_slide(velocity)
+
+
+func _on_Sprite_animation_finished():
+	if animation.split('_')[0] == "Attack":
+		deceleration_step = 0.09
+		if Input.is_action_pressed("ui_"+CONV_DIRECTION[direction]):
+			change_state(3)
+		else:
+			change_state(1)

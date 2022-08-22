@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Script/Main.gd" type="Script" id=1]
 [ext_resource path="res://Image/Character with sword and shield/block/block down.png" type="Texture" id=2]
@@ -39,9 +39,45 @@
 [ext_resource path="res://Image/Character with sword and shield/walk/walk down2.png" type="Texture" id=37]
 [ext_resource path="res://Image/Character with sword and shield/walk/walk down4.png" type="Texture" id=38]
 [ext_resource path="res://Image/Character with sword and shield/walk/walk left1.png" type="Texture" id=39]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack down3.png" type="Texture" id=40]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack left1.png" type="Texture" id=41]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack down1.png" type="Texture" id=42]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack down2.png" type="Texture" id=43]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack left2.png" type="Texture" id=44]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack left3.png" type="Texture" id=45]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack right4.png" type="Texture" id=46]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack down4.png" type="Texture" id=47]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack left4.png" type="Texture" id=48]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack up1.png" type="Texture" id=49]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack up4.png" type="Texture" id=50]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack up2.png" type="Texture" id=51]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack up3.png" type="Texture" id=52]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack right1.png" type="Texture" id=53]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack right2.png" type="Texture" id=54]
+[ext_resource path="res://Image/Character with sword and shield/attack/attack right3.png" type="Texture" id=55]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 42 ), ExtResource( 43 ), ExtResource( 40 ), ExtResource( 47 ) ],
+"loop": false,
+"name": "Attack_down",
+"speed": 13.0
+}, {
+"frames": [ ExtResource( 41 ), ExtResource( 44 ), ExtResource( 45 ), ExtResource( 48 ) ],
+"loop": false,
+"name": "Attack_left",
+"speed": 13.0
+}, {
+"frames": [ ExtResource( 53 ), ExtResource( 54 ), ExtResource( 55 ), ExtResource( 46 ) ],
+"loop": false,
+"name": "Attack_right",
+"speed": 13.0
+}, {
+"frames": [ ExtResource( 49 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 50 ) ],
+"loop": false,
+"name": "Attack_up",
+"speed": 13.0
+}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": false,
 "name": "Block_down",
@@ -120,32 +156,34 @@ script = ExtResource( 1 )
 texture = ExtResource( 3 )
 centered = false
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+[node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( 352, 262 )
 scale = Vector2( 7, 7 )
 
-[node name="Player" type="AnimatedSprite" parent="KinematicBody2D"]
+[node name="Sprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 1 )
 animation = "Idle_down"
 script = ExtResource( 19 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 2 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Wall" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall"]
 position = Vector2( 1930, 540 )
 shape = SubResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
 position = Vector2( -10, 540 )
 shape = SubResource( 3 )
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Wall"]
 position = Vector2( 960, -10 )
 shape = SubResource( 4 )
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Wall"]
 position = Vector2( 960, 1090 )
 shape = SubResource( 4 )
+
+[connection signal="animation_finished" from="Player/Sprite" to="Player/Sprite" method="_on_Sprite_animation_finished"]

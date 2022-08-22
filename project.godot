@@ -117,6 +117,11 @@ boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.576471, 0.329412, 0.576471, 1 )
 config/icon="res://icon.png"
 
+[discord_presence]
+
+first_button/label="See on Github"
+first_button/url="https://github.com/Apologieze/SlicingTachi"
+
 [display]
 
 window/size/width=1920
@@ -195,6 +200,11 @@ screen_key={
 block={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":67,"unicode":0,"echo":false,"script":null)
+ ]
+}
+attack={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":70,"unicode":0,"echo":false,"script":null)
  ]
 }
 
