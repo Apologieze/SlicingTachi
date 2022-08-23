@@ -3,7 +3,7 @@ extends AnimatedSprite
 const CONV_STATE = [null, "Idle_", "Block_", "Walk_", "Attack_"]
 const CONV_DIRECTION = [null, "up", "right", "down", "left"]
 
-var direction = 0
+var direction = 3
 var state = 1
 
 var moving_direction = Vector2.ZERO
@@ -47,8 +47,10 @@ func _input(event):
 		stop_direction(4)
 	
 	elif event.is_action_pressed("block"):
-		change_state(2)
-		deceleration_step = 0.01
+		if state != 4:
+			change_state(2)
+			deceleration_step = 0.01
+			$Particles2D.emitting = true
 	elif event.is_action_released("block"):
 		deceleration_step = 0.09
 		if Input.is_action_pressed("ui_"+CONV_DIRECTION[direction]):
@@ -58,7 +60,7 @@ func _input(event):
 	
 	elif event.is_action_pressed("attack"):
 		change_state(4)
-		deceleration_step = 0.01
+		deceleration_step = 0.03
 	
 func change_state(temp_state):
 	state = temp_state
